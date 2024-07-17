@@ -1,0 +1,8 @@
+.herocontainer{
+    height: 100vh;
+    background-image: url(../../assets/hero.webp);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+
+}

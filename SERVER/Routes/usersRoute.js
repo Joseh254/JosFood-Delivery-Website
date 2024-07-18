@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { validate } from "../Middleware/usersMiddleware.js";
-import { createuser, loginUser } from "../Controllers/usersController.js";
+import {getallusers, loginUser,createuser } from "../Controllers/usersController.js";
 const router = Router();
 
-router.post("/register", validate, createuser);
+router.post("register",createuser);
+router.get("/users",getallusers)
 
 router.post("/login", loginUser);
 

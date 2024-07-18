@@ -9,7 +9,7 @@ export async function createuser(request, response) {
 
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const newUser = await prisma.jostech_users.create({
+    const newUser = await prisma.users.create({
       data: {
         firstName,
         lastName,
@@ -31,7 +31,7 @@ export async function createuser(request, response) {
 export async function loginUser(request, response) {
   const { email, password, firstName } = request.body;
   try {
-    const user = await prisma.jostech_users.findFirst({
+    const user = await prisma.users.findFirst({
       where: { email, firstName: firstName },
     });
 
@@ -66,4 +66,17 @@ export async function loginUser(request, response) {
   } catch (error) {
     response.status(500).json({ success: false, message: error.message });
   }
+}
+
+export async function getallusers(request,response){
+try {
+    const users = prisma.users.findMany()
+    if(users){
+        response.status(200).json({success:true, data:users})
+    }
+    return response.status(404).json({success:false,message:"an error ocuured"})
+} catch (error) {
+    console.log(error.message);
+    response.status(400).json({success:false, message:"users not found"})
+}
 }

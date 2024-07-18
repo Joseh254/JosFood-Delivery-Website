@@ -96,4 +96,19 @@ export async function getAllUsers(request, response) {
         
     }
   }
+
+  export async function getSingleuser(request, response){
+    const {id} = request.params
+    try {
+       const user= await prisma.users.findFirst({
+            where:{id:id}
+        }) 
+        if(user){
+            response.status(200).json({success:true,data:user})
+        }return response.status(404).json({success:false,message:"user not found"})
+    } catch (error) {
+    console.log(error.message);
+     response.status(404).json({success:false, message:"user not found"})   
+    }
+  }
   

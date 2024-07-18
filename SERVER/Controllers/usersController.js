@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function createuser(request, response) {
   try {
-    const { firstName, lastName, email, password } = request.body;
+    const { firstName, lastName, email, password ,role} = request.body;
 
     const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -15,6 +15,7 @@ export async function createuser(request, response) {
         lastName,
         email,
         password: hashedPassword,
+        role
       },
     });
 
@@ -22,7 +23,7 @@ export async function createuser(request, response) {
       .status(201)
       .json({ success: true, message: "Sign up was successful" });
   } catch (error) {
-    response
+    return response
       .status(500)
       .json({ success: false, message: "An error occurred in the server" });
   }
@@ -44,6 +45,7 @@ export async function loginUser(request, response) {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          role:user.role,
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -56,15 +58,15 @@ export async function loginUser(request, response) {
           .status(200)
           .json({ success: true, message: "Logged in successfully" });
       } else {
-        response
+        return  response
           .status(401)
           .json({ success: false, message: "Wrong email or password" });
       }
     } else {
-      response.status(404).json({ success: false, message: "User not found" });
+        return response.status(404).json({ success: false, message: "User not found" });
     }
   } catch (error) {
-    response.status(500).json({ success: false, message: error.message });
+    return response.status(500).json({ success: false, message: error.message });
   }
 }
 
@@ -92,7 +94,7 @@ export async function getAllUsers(request, response) {
         return response.status(200).json({success:true,message:"user deleted"})
     } catch (error) {
         console.log(error.message);
-        response.status(404).json({success:false,message:"user not found"})
+        return response.status(404).json({success:false,message:"user not found"})
         
     }
   }
@@ -108,7 +110,7 @@ export async function getAllUsers(request, response) {
         }return response.status(404).json({success:false,message:"user not found"})
     } catch (error) {
     console.log(error.message);
-     response.status(404).json({success:false, message:"user not found"})   
+     return response.status(404).json({success:false, message:"user not found"})   
     }
   }
   

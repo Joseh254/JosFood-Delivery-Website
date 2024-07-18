@@ -68,15 +68,18 @@ export async function loginUser(request, response) {
   }
 }
 
-export async function getallusers(request,response){
-try {
-    const users = prisma.users.findMany()
-    if(users){
-        response.status(200).json({success:true, data:users})
+export async function getAllUsers(request, response) {
+    try {
+      const users = await prisma.users.findMany();
+  
+      if (users) {
+        return response.status(200).json({ success: true, data: users });
+      } else {
+        return response.status(400).json({ success: false, message: "Users not found" });
+      }
+    } catch (error) {
+      console.log(error.message);
+      return response.status(400).json({ success: false, message: "An error occurred" });
     }
-    return response.status(404).json({success:false,message:"an error ocuured"})
-} catch (error) {
-    console.log(error.message);
-    response.status(400).json({success:false, message:"users not found"})
-}
-}
+  }
+  

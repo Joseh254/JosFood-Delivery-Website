@@ -32,7 +32,7 @@ export async function loginUser(request, response) {
   const { email, password, firstName } = request.body;
   try {
     const user = await prisma.users.findFirst({
-      where: { email, firstName: firstName },
+      where: { email:email, firstName: firstName },
     });
 
     if (user) {
@@ -80,6 +80,20 @@ export async function getAllUsers(request, response) {
     } catch (error) {
       console.log(error.message);
       return response.status(400).json({ success: false, message: "An error occurred" });
+    }
+  }
+
+  export async function deleteUser(request,response){
+    const {id} = request.params
+    try {
+        await prisma.users.delete({
+            where:{id:id}
+        })
+        return response.status(200).json({success:true,message:"user deleted"})
+    } catch (error) {
+        console.log(error.message);
+        response.status(404).json({success:false,message:"user not found"})
+        
     }
   }
   

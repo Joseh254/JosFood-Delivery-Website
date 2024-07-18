@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function validate(request, response, next) {
+export default async function validate(request, response, next) {
   const { firstName, lastName, email, password } = request.body;
 
   if (!firstName) {
@@ -27,7 +27,7 @@ export async function validate(request, response, next) {
       .status(400)
       .json({ success: false, message: "password is required" });
   }
-  const userWithEmail = await prisma.jostech_users.findFirst({
+  const userWithEmail = await prisma.users.findFirst({
     where: { email: email },
   });
   if (userWithEmail)

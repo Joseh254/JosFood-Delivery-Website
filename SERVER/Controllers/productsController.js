@@ -14,7 +14,7 @@ export async function createProduct(request,response){
             }
         })
 
-        response.status(201).json({success:true,message:"product eas created succesfuly"})
+        response.status(201).json({success:true,message:"product was created succesfuly"})
     } catch (error) {
        console.log(error.message); 
        return response.status(500).json({success:false, message:"an error occured in the server"})
@@ -34,5 +34,14 @@ export async function UpdateProduct(request,response){
 }
 
 export async function deleteProduct(request,response){
-    response.send("deleting a product")
+    try {
+        const {id} = request.params
+    await prisma.products.delete({
+        where:{id:id}
+    })
+    response.status(200).json({success:true, message:"product deleted succesfully"})
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).json({success:false, message:"internal server error"})
+    }
 }

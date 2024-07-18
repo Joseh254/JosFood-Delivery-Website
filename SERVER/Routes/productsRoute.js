@@ -3,7 +3,7 @@ import { createProduct,GetAllProducts,GetOneProduct,UpdateProduct,deleteProduct 
 const router = Router()
 router.post("/createProduct",createProduct)
 router.get("/getAllproducts",GetAllProducts)
-router.get("/getOneproduct",GetOneProduct)
+router.get("/getOneproduct/:id",GetOneProduct)
 router.patch("/updateproduct",UpdateProduct)
 router.delete("/deleteproduct/:id",deleteProduct)
 

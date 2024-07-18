@@ -22,16 +22,38 @@ export async function createProduct(request,response){
 }
 
 export async function GetAllProducts(request,response){
-    response.send("getting all  products")
+   try {
+    const product = await prisma.products.findMany()
+    response.status(200).json({success:true, data: product})
+   } catch (error) {
+    console.log(error.message);
+    return response.status(500).json({success:false, message:"No products"})
+   }
 }
 
-export async function GetOneProduct(request,response){
-    response.send("getting one product")
-}
+export async function GetOneProduct(request, response) {
+    try {
+      const {id} = request.params;
+      const product = await prisma.products.findFirst({
+        where: { productName: id } 
+      });
+  
+      if (product) {
+        return response.status(200).json({ success: true, data: product });
+      } else {
+        return response.status(404).json({ success: false, message: "Product not found" });
+      }
+    } catch (error) {
+      console.log(error.message);
+      return response.status(500).json({ success: false, message: "An error occurred while fetching the product" });
+    }
+  }
+  
 
 export async function UpdateProduct(request,response){
     response.send("updating a product")
 }
+
 
 export async function deleteProduct(request,response){
     try {
@@ -42,6 +64,6 @@ export async function deleteProduct(request,response){
     response.status(200).json({success:true, message:"product deleted succesfully"})
     } catch (error) {
         console.log(error.message);
-        return response.status(500).json({success:false, message:"internal server error"})
+        return response.status(500).json({success:false, message:"Product was not found"})
     }
 }

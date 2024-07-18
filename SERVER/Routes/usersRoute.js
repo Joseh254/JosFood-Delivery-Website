@@ -15,4 +15,7 @@ router.post("/login", loginUser);
 router.delete("/delete/:id",deleteUser)
 router.get("/user/:id",getSingleuser)
 
+
+
+
 export default router;

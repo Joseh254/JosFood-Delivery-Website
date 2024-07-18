@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import { GrMenu } from "react-icons/gr";
+import { useNavigate } from 'react-router-dom';
 import "./Header.css"
 
 function Header() {
     const [signedIn, setSignedIn] = useState(false);
+    const [loading, setLoading] =useState(false)
+    const navigate = useNavigate()
 
     const handleSignInToggle = () => {
         setSignedIn(!signedIn);
+        if(signedIn){
+            setLoading(false)
+            navigate("/Login")
+        }else{
+            setLoading(true)
+        }
     };
 
     return (

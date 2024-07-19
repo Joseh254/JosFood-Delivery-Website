@@ -13,7 +13,7 @@ function Header() {
   };
 
   const handleLoginToggle = () => {
-    navigate('/Login')
+    navigate("/Login");
   };
 
   return (
@@ -30,7 +30,9 @@ function Header() {
           Login
         </button>
 
-        <button id="signup" onClick={handleSignInToggle}>signup</button>
+        <button id="signup" onClick={handleSignInToggle}>
+          signup
+        </button>
       </div>
     </header>
   );

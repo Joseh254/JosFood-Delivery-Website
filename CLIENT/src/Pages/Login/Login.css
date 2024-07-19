@@ -1,6 +1,33 @@
-.loginsection{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.loginsection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../assets/hero.webp);
+  background-size: cover;
+  height: 100vh;
+}
+.loginpage {
+  background-color: #efc075;
+  padding: 2rem;
+  width: 50%;
+}
+.logininputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.logininputs input {
+  padding: 0.8rem;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.logininputs button {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #000;
+  color: #fff;
+  font-size: 1rem;
 }

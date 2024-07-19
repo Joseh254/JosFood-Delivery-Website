@@ -6,7 +6,6 @@ import { useState } from "react";
 import { api_url } from "../../../utills/config";
 import { useNavigate } from "react-router-dom";
 
-
 function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -27,7 +26,7 @@ function Login() {
 
       const data = await response.json();
       if (data.success === true) {
-        navigate("/Account");
+        navigate("/AdminHome");
       } else {
         setError(data.message || "Login failed");
       }
@@ -59,77 +58,72 @@ function Login() {
   });
 
   return (
-
     <section className="loginsection">
-    <div className="loginpage">
-      
-      <form onSubmit={formik.handleSubmit}>
-        <div className="">
-        <h1>Log in to your account</h1>
-          <div className="logininputs">
-            <label htmlFor="firstname">First Name</label>
-            <input
-              type="text"
-              placeholder="First name"
-              name="firstname"
-              value={formik.values.firstname}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              required
-            />
-            {formik.touched.firstname && formik.errors.firstname && (
-              <p>{formik.errors.firstname}</p>
-            )}
-          </div>
-
-          <div className="logininputs">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              placeholder="Your email address"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              required
-            />
-            {formik.touched.email && formik.errors.email && (
-              <p>{formik.errors.email}</p>
-            )}
-          </div>
-
-          <div className="logininputs">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              placeholder="Your password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              required 
-            />
-            {formik.touched.password && formik.errors.password && (
-              <p className="loginerror">{formik.errors.password}</p>
-            )}
-
+      <div className="loginpage">
+        <form onSubmit={formik.handleSubmit}>
+          <div className="">
+            <h1>Log in to your account</h1>
             <p>
-              Forgot your password? <Link to="/">Reset Password</Link>
+              Dont have an account? <Link to="/Signup">Create Account</Link>
             </p>
-            {error && <p className="loginerror">{error}</p>}
-            <button type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Log in"}
-            </button>
-            <p>
-              <Link to="/Signin">Create Account</Link>
-            </p>
-          </div>
-        </div>
-      </form>
+            <div className="logininputs">
+              <label htmlFor="firstname">First Name</label>
+              <input
+                type="text"
+                placeholder="First name"
+                name="firstname"
+                value={formik.values.firstname}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                required
+              />
+              {formik.touched.firstname && formik.errors.firstname && (
+                <p>{formik.errors.firstname}</p>
+              )}
+            </div>
 
-     
-    </div>
-   
+            <div className="logininputs">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                placeholder="Your email address"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                required
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p>{formik.errors.email}</p>
+              )}
+            </div>
+
+            <div className="logininputs">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                placeholder="Your password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                required
+              />
+              {formik.touched.password && formik.errors.password && (
+                <p className="loginerror">{formik.errors.password}</p>
+              )}
+
+              <p>
+                Forgot your password? <Link to="/">Reset Password</Link>
+              </p>
+              {error && <p className="loginerror">{error}</p>}
+              <button type="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Log in"}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </section>
   );
 }

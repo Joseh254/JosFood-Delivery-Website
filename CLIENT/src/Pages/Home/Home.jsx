@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import TypingAnimator from "react-typing-animator";
 import axios from "axios";
 import { api_url } from "../../../utills/config";
@@ -6,32 +6,34 @@ import "./Home.css";
 
 function Home() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] =useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-useEffect(()=>{
-  async function fetchProducts(){
-    try {
-      const response = await axios.get(`${api_url}/api/products/getAllproducts`);
-      console.log(response);
-      setProducts(response.data.data)
-      console.log(response.data.data);
-      setLoading(false)
-    } catch (error) {
-      setError(error);
-      setLoading(false);
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await axios.get(
+          `${api_url}/api/products/getAllproducts`,
+        );
+        console.log(response);
+        setProducts(response.data.data);
+        console.log(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
     }
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return <p>Loading please wait...</p>;
   }
 
-  fetchProducts();
-},[]);
-
-if(loading){
-  return <p>Loading please wait...</p>
-}
-
-if(error){
-  return <p>{error.message}</p>
-}
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   const textArray = ["near you", "Call Us on", "+254768163608"];
   const animation = (
@@ -65,22 +67,19 @@ if(error){
         </div>
       </div>
 
-
       <section className="products">
-   
-{products.map((product)=>(
-      <div className="productscontainer" key={product.id}>
-        <img src={product.productImage} alt={product.productImage} />
-        <h1>{product.productName}</h1>
-        <p>{product.productDescription}</p>
-        <p><strike>Was Ksh{product.productPrice+100}</strike></p>
-        <p className="pricenow">Now Ksh{product.productPrice}</p>
-        <button>Add to Cart</button>
-      </div>
-)
-
-)}
-
+        {products.map((product) => (
+          <div className="productscontainer" key={product.id}>
+            <img src={product.productImage} alt={product.productImage} />
+            <h1>{product.productName}</h1>
+            <p>{product.productDescription}</p>
+            <p>
+              <strike>Was Ksh{product.productPrice + 100}</strike>
+            </p>
+            <p className="pricenow">Now Ksh{product.productPrice}</p>
+            <button>Add to Cart</button>
+          </div>
+        ))}
       </section>
     </>
   );

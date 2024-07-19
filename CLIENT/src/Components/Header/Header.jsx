@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
@@ -10,11 +9,11 @@ function Header() {
   const navigate = useNavigate();
 
   const handleSignInToggle = () => {
-    navigate("/Login");
+    navigate("/Signup");
   };
 
   const handleLoginToggle = () => {
-    <Link to = "/Signup"></Link>
+    navigate('/Login')
   };
 
   return (

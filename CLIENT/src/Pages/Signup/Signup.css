@@ -1,0 +1,30 @@
+.signinpage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../../assets/hero.webp);
+    background-size: cover;
+    height: 100vh;
+}
+.signininputs{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border-top: none;
+    background-color: black;
+    color: white;
+    width: 130%;
+}
+
+.signininputs input{
+    padding: .8rem;
+  
+}
+.submit{
+    color: #fff;
+    background-color: #000;
+    padding: .7rem;
+    width: 130%;
+    font-size: 1.2rem;
+}

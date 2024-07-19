@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from "react";
 import TypingAnimator from "react-typing-animator";
 import axios from "axios";
-
+import { api_url } from "../../../utills/config";
 import "./Home.css";
 
 function Home() {
@@ -11,7 +11,7 @@ function Home() {
 useEffect(()=>{
   async function fetchProducts(){
     try {
-      const response = await axios.get('http://localhost:3000/api/products/getAllproducts');
+      const response = await axios.get(`${api_url}/api/products/getAllproducts`);
       console.log(response);
       setProducts(response.data.data)
       console.log(response.data.data);
@@ -73,7 +73,9 @@ if(error){
         <img src={product.productImage} alt={product.productImage} />
         <h1>{product.productName}</h1>
         <p>{product.productDescription}</p>
-        <p>$ {product.productPrice}</p>
+        <p><strike>Was Ksh{product.productPrice+100}</strike></p>
+        <p className="pricenow">Now Ksh{product.productPrice}</p>
+        <button>Add to Cart</button>
       </div>
 )
 

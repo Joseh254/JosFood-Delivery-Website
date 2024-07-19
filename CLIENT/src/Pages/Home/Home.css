@@ -42,6 +42,7 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  min-width: 100%;
 }
 .productscontainer{
   display: flex;
@@ -49,4 +50,21 @@
   align-items: center;
   justify-content: center;
   border: solid 2px gold ;
+}
+.productscontainer img{
+  max-width: 100%;
+}
+.productscontainer button{
+  padding: .3rem;
+  margin-bottom: .6rem;
+  background-color: gold;
+  font-weight: 600;
+  width: 40%;
+  border-radius: 24px;
+}
+.productscontainer button:hover{
+  background-color: rgb(189, 174, 87);
+}
+.pricenow{
+  font-weight: 700;
 }

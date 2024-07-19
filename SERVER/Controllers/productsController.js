@@ -51,7 +51,53 @@ export async function GetOneProduct(request, response) {
   
 
 export async function UpdateProduct(request,response){
-    response.send("updating a product")
+  const {productName, productPrice,productDescription,productImage}=request.body;
+  try {
+    const {id} = request.params;
+
+    let updateProduct;
+    if(productName){
+      updateProduct = await prisma.products.update({
+        where:{id:id},
+        data:{productName:productName}
+      })
+
+
+      
+      if(productPrice){
+        updateProduct = await prisma.products.update({
+          where:{id:id},
+          data:{
+            productPrice:productPrice
+          }
+        })
+
+
+      if(productDescription){
+        updateProduct= await prisma.products.update({
+          where:{id:id},
+          data:{productDescription:productDescription}
+        })
+
+        if(productImage){
+          updateProduct = await prisma.products.update({
+            where:{id:id},
+            data:{
+              productImage:productImage
+            }
+          })
+        }
+
+        }
+      }
+      response.status(200).json({success:true,message:"product updated"})
+    }
+  } catch (error) {
+    console.log(error.message);
+    return response.status(404).json({success:false, message:"product not found"})
+    
+  }
+
 }
 
 

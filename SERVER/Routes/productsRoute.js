@@ -4,7 +4,7 @@ const router = Router()
 router.post("/createProduct",createProduct)
 router.get("/getAllproducts",GetAllProducts)
 router.get("/getOneproduct/:id",GetOneProduct)
-router.patch("/updateproduct",UpdateProduct)
+router.patch("/updateproduct/:id",UpdateProduct)
 router.delete("/deleteproduct/:id",deleteProduct)
 
 export default router;

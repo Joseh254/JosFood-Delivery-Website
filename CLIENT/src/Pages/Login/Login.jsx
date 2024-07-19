@@ -66,21 +66,6 @@ function Login() {
             <p>
               Dont have an account? <Link to="/Signup">Create Account</Link>
             </p>
-            <div className="logininputs">
-              <label htmlFor="firstname">First Name</label>
-              <input
-                type="text"
-                placeholder="First name"
-                name="firstname"
-                value={formik.values.firstname}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                required
-              />
-              {formik.touched.firstname && formik.errors.firstname && (
-                <p>{formik.errors.firstname}</p>
-              )}
-            </div>
 
             <div className="logininputs">
               <label htmlFor="email">Email</label>

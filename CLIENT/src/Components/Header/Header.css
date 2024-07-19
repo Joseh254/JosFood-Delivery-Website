@@ -1,42 +1,41 @@
-.navigationbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    /* margin: .5rem 1rem; */
-    position: fixed;
-    background-color: #ffffff;
-    width: 100%;
-    padding: .5rem;
+.navigationbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* margin: .5rem 1rem; */
+  position: fixed;
+  background-color: #ffffff;
+  width: 100%;
+  padding: 0.5rem;
 }
-.favdishes{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+.favdishes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
-.favdishes p{
-font-size: 2rem;
+.favdishes p {
+  font-size: 2rem;
 }
-.loginandsignupbuttons{
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;  
+.loginandsignupbuttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
-#login{
-   background-color: white; 
-   border: none;
-   padding: .5rem 1rem;
+#login {
+  background-color: white;
+  border: none;
+  padding: 0.5rem 1rem;
 }
-#login:hover{
-    border-radius: 25px;
-    background-color: rgb(235, 239, 243);
+#login:hover {
+  border-radius: 25px;
+  background-color: rgb(235, 239, 243);
 }
-#signup{
-    border-radius: 25px;
-    padding: .5rem 1rem;
-    background-color: #000000;
-    color: #ffffff;
+#signup {
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  background-color: #000000;
+  color: #ffffff;
 }
-

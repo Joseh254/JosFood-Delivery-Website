@@ -1,23 +1,20 @@
-import React from 'react'
-import { useFormik } from 'formik'
+import React from "react";
+import { useFormik } from "formik";
 
 function Login() {
-  function handleSubmit(){
-
-  }
+  function handleSubmit() {}
   const formik = useFormik({
-    initialValues:{
-      email:"",
-      password:""
-    },onSubmit:handleSubmit,
-  })
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: handleSubmit,
+  });
   return (
-   <>
-   <form >
-    
-   </form>
-   </>
-  )
+    <>
+      <form></form>
+    </>
+  );
 }
 
-export default Login
+export default Login;

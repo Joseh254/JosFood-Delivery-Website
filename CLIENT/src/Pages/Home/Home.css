@@ -1,38 +1,52 @@
-.herocontainer{
-    height: 100vh;
-    background-image: url(../../assets/hero.webp);
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.herocontainer {
+  height: 100vh;
+  background-image: url(../../assets/hero.webp);
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.heroheading h1{
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
+.heroheading h1 {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
-.heroinputs{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.heroinputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-   
-    gap: .5rem;
-    margin-left: 10rem;
+  gap: 0.5rem;
+  margin-left: 10rem;
 }
-.heroinputs input{
-padding: 1rem;
-width: 40rem;
-padding-left: 5rem;
-font-size: 1rem;
+.heroinputs input {
+  padding: 1rem;
+  width: 40rem;
+  padding-left: 5rem;
+  font-size: 1rem;
 }
-.heroinputs select{
-    padding: 1rem;
-    font-size: 1rem;
+.heroinputs select {
+  padding: 1rem;
+  font-size: 1rem;
 }
-.heroinputs button{
-    background-color: #000000;
-    color: #ffffff;
-    padding: 1rem;
+.heroinputs button {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 1rem;
+}
+.products{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.productscontainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px gold ;
 }

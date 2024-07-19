@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { GrMenu } from "react-icons/gr";
-import { useNavigate } from 'react-router-dom';
-import "./Header.css"
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./Header.css";
 
 function Header() {
-    const [signedIn, setSignedIn] = useState(false);
-    const [loading, setLoading] =useState(false)
-    const navigate = useNavigate()
+  const [signedIn, setSignedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const handleSignInToggle = () => {
-        setSignedIn(!signedIn);
-        if(signedIn){
-            setLoading(false)
-            navigate("/Login")
-        }else{
-            setLoading(true)
-        }
-    };
+  const handleSignInToggle = () => {
+    navigate("/Login");
+  };
 
-    return (
-        <header className='navigationbar'>
-            <div className="favdishes">
-               
-                    <p><GrMenu/></p>
-                    <h2>Uber Eats</h2>
-            </div>
+  const handleLoginToggle = () => {
+    <Link to = "/Signup"></Link>
+  };
 
-            <div className="loginandsignupbuttons">
-                <button id='login'
-                 onClick={handleSignInToggle} className='loginlogout'>
-                {signedIn ? "Logout" : "Login"}
-                </button>
+  return (
+    <header className="navigationbar">
+      <div className="favdishes">
+        <p>
+          <GrMenu />
+        </p>
+        <h2>Uber Eats</h2>
+      </div>
 
-                <button id='signup'
-                onClick={handleSignInToggle}
-                >{signedIn ?  "":"Signup"}</button>
-            </div>
+      <div className="loginandsignupbuttons">
+        <button id="login" className="loginlogout" onClick={handleLoginToggle}>
+          Login
+        </button>
 
-        </header>
-    );
+        <button id="signup" onClick={handleSignInToggle}>signup</button>
+      </div>
+    </header>
+  );
 }
 
 export default Header;

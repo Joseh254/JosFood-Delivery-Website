@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebookMessenger, FaGithub } from "react-icons/fa";
 import { useFormik } from "formik";
 import axios from "axios";
 // import api_url from "../../../utills/config.js"
@@ -12,36 +10,23 @@ function Signin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // const handleSubmit = async (values) => {
-  //   try {
-  //     setLoading(true);
-  //     setError("");
-  //     const response = await axios.post(`${api_url}/api/users/register`, {
-  //       firstName: values.firstName,
-  //       lastName: values.lastName,
-  //       email: values.email,
-  //       password: values.password,
-  //     });
-
-  //     if (response.data.success) {
-  //       navigate("/Login");
-  //     } else {
-  //       setError(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     if (
-  //       error.response &&
-  //       error.response.data &&
-  //       error.response.data.message
-  //     ) {
-  //       setError(error.response.data.message);
-  //     } else {
-  //       setError(error.message);
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleSubmit = async (values) => {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await axios.post("http://localhost:3000/api/users/register",values);
+      console.log(response);
+      if (response.data.success="true") {
+        navigate("/Login");
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -51,7 +36,7 @@ function Signin() {
       password: "",
       confirmPassword: "",
     },
-    // onSubmit: handleSubmit,
+    onSubmit: handleSubmit,
     validate: (values) => {
       let errors = {};
       if (!values.firstName) errors.firstName = "First name is required";
@@ -76,7 +61,7 @@ function Signin() {
 
         {error && <h1 className="error">{error}</h1>}
 
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <div className="signininputs">
             <label>First Name</label>
             <input

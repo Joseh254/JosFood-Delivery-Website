@@ -1,39 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { useState } from "react";
+import axios from "axios";
 import { api_url } from "../../../utills/config";
-import { useNavigate } from "react-router-dom";
+import useUserStore from "./Store/UserStore";
 
 function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const changeUserInformation = useUserStore((state) => state.changeUserInformation);
 
   async function handleSubmit(formState) {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch(`${api_url}/api/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formState),
-        credentials: "include",
-      });
-
-      const data = await response.json();
-      if (data.success === true) {
-        navigate("/AdminHome");
-      } else {
-        setError(data.message || "Login failed");
-      }
-      console.log(data);
+      const response = await axios.post("http://localhost:3000/api/users/login", formState);
       console.log(response);
+      const data = response.data;
+      console.log(data.data.role);
+      if(data.success ===true){
+        if (data.data.role === "admin") {
+          changeUserInformation(data.user); 
+          navigate("/AdminHome");
+        } else {
+          navigate("/")
+        }
+      }else{
+        setError(error.message)
+      }
     } catch (error) {
-      setError("An error occurred during login. Please try again.");
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -41,18 +39,14 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-      firstname: "",
       email: "",
       password: "",
     },
     onSubmit: handleSubmit,
     validate: function (formValues) {
       let errors = {};
-      if (formValues.firstname === "")
-        errors.firstname = "First name is required";
       if (formValues.email === "") errors.email = "Email is required";
-      if (formValues.password === "")
-        errors.password = "Please enter a password";
+      if (formValues.password === "") errors.password = "Please enter a password";
       return errors;
     },
   });
@@ -64,7 +58,7 @@ function Login() {
           <div className="">
             <h1>Log in to your account</h1>
             <p>
-              Dont have an account? <Link to="/Signup">Create Account</Link>
+              Don't have an account? <Link to="/Signup">Create Account</Link>
             </p>
 
             <div className="logininputs">
@@ -79,7 +73,7 @@ function Login() {
                 required
               />
               {formik.touched.email && formik.errors.email && (
-                <p>{formik.errors.email}</p>
+                <p className="loginerror">{formik.errors.email}</p>
               )}
             </div>
 

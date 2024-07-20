@@ -45,18 +45,16 @@ export async function loginUser(request, response) {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          role:user.role,
+          role:user.role
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "100h",
         });
 
-        response.cookie("access_token", token);
+        response.cookie("access_token", token).json({success:true,message:"You are loged in" , data:payload})
+    
 
-        response
-          .status(200)
-          .json({ success: true, message: "Logged in successfully" });
       } else {
         return  response
           .status(401)

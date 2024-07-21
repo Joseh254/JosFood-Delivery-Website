@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import { api_url } from "../../../utills/config";
-import useUserStore from "./Store/UserStore";
+import useUserStore from "../../../Store/UserStore";
 
 function Login() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function Login() {
     try {
       setLoading(true);
       setError("");
-      const response = await axios.post("http://localhost:3000/api/users/login", formState);
+      const response = await axios.post(`${api_url}/api/users/login`, formState);
       console.log(response);
       const data = response.data;
       console.log(data.data.role);
@@ -97,7 +97,7 @@ function Login() {
               </p>
               {error && <p className="loginerror">{error}</p>}
               <button type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Log in"}
+                {loading ? "Please wait..." : "Log in"}
               </button>
             </div>
           </div>

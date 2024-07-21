@@ -5,20 +5,36 @@ import Footer from "./Components/Footer/Footer";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import Signup from "./Pages/Signup/Signup";
-import AdminHome from "./Pages/Admin/AdminHome";
+import AdminHome from "./Pages/Admin/AdminHome/AdminHome";
+import AdminProducts from "./Pages/Admin/AdminProducts/AdminProducts";
+import AdminOrders from "./Pages/Admin/AdminOrders/AdminOrders";
+import AdminUsers from "./Pages/Admin/AdminUsers/AdminUsers";
+import AdminHeader from "./Components/AdminHeader/AdminHeader";
 
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
+
+
+<BrowserRouter>
+<AdminHeader/>
+<Routes>
+  <Route path="/AdminHome" element={<AdminHome />} />
+  <Route path="/AdminProducts" element={<AdminProducts />} />
+  <Route path="/AdminOrders" element={<AdminOrders />} />
+  <Route path="/AdminUsers" element={<AdminUsers />} />
+</Routes>
+<Footer/>
+</BrowserRouter>
+</>
   );
 }
 

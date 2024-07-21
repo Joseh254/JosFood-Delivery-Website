@@ -1,0 +1,41 @@
+.Adminproducts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-width: 100%;
+  }
+  .Adminproductscontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid 3px gold;
+    background-color: #ebe9e1;
+    width: 15rem;
+  }
+  .Adminproductscontainer img {
+    max-width: 100%;
+  }
+  .adminoperationButtons {
+    padding: 0.3rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    font-weight: 600;
+
+  }
+  .Adminproductscontainer button:hover {
+    background-color: rgb(189, 174, 87);
+  }
+  .editbtn{
+background-color: gold;
+  }
+
+  .delbtn{
+    background-color: red;
+    color: #fff;
+  }

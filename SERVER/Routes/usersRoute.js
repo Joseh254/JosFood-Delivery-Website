@@ -1,5 +1,6 @@
 import { Router } from "express";
 import validate from "../Middleware/usersMiddleware.js"
+import VerifyAdmin from "../Middleware/VerifyAdmin.js";
 import {
   getAllUsers,
   loginUser,
@@ -10,10 +11,10 @@ import {
 const router = Router();
 
 router.post("/register", validate, createuser);
-router.get("/users", getAllUsers);
+router.get("/users", VerifyAdmin,getAllUsers);
 router.post("/login", loginUser);
-router.delete("/delete/:id",deleteUser)
-router.get("/user/:id",getSingleuser)
+router.delete("/delete/:id",VerifyAdmin,deleteUser)
+router.get("/user/:id", VerifyAdmin,getSingleuser)
 
 
 

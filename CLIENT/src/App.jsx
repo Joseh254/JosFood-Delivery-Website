@@ -24,8 +24,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/AdminProducts" element={<AdminProducts />} />
-  <Route path="/AdminOrders" element={<AdminOrders />} />
-  <Route path="/AdminUsers" element={<AdminUsers />} />
+        <Route path="/AdminOrders" element={<AdminOrders />} />
+        <Route path="/AdminUsers" element={<AdminUsers />} />
       </Routes>
       <Footer/>
     </BrowserRouter>

@@ -7,7 +7,7 @@ function AdminHome() {
   return (
     <>
     <div>
-  home
+  <AdminHeader/>
       </div>
     </>
   )

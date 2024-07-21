@@ -7,7 +7,7 @@ function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  useEffect(() => {
+  useEffect(() => { 
     async function fetchProducts() {
       try {
         const response = await axios.get(
@@ -41,6 +41,7 @@ function AdminProducts() {
             <img src={product.productImage} alt={product.productImage} />
             <h1>{product.productName}</h1>
             <p>{product.productDescription}</p> 
+            <p className="pricenow">Price Ksh{product.productPrice}</p>
 
             <div className='adminoperationButtons'>
             <button className='editbtn'>Edit</button>

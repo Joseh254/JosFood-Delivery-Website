@@ -24,8 +24,11 @@ function Login() {
         if (data.data.role === "admin") {
           changeUserInformation(data.user); 
           navigate("/AdminHome");
-        } else {
-          navigate("/")
+        } if(data.data.role==="user") {
+          navigate("/Cart")
+        }
+        else{
+          setError("Failed to load try again later")
         }
       }else{
         setError(error.message)

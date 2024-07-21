@@ -28,14 +28,16 @@
     font-weight: 600;
 
   }
-  .Adminproductscontainer button:hover {
-    background-color: rgb(189, 174, 87);
-  }
   .editbtn{
 background-color: gold;
+padding:.5rem;
+border-radius: 20px;
+width: 5rem;
   }
 
   .delbtn{
     background-color: red;
     color: #fff;
+    border-radius: 20px;
+    width: 5rem;
   }

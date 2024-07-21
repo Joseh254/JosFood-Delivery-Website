@@ -10,6 +10,7 @@ import AdminProducts from "./Pages/Admin/AdminProducts/AdminProducts";
 import AdminOrders from "./Pages/Admin/AdminOrders/AdminOrders";
 import AdminUsers from "./Pages/Admin/AdminUsers/AdminUsers";
 import AdminHeader from "./Components/AdminHeader/AdminHeader";
+import Cart from "./Pages/Cart/Cart";
 
 function App() {
   return (
@@ -17,23 +18,18 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
+      <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/" element={<Home />} />
+        <Route path="/Cart" element={<Cart />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
-
-
-<BrowserRouter>
-<AdminHeader/>
-<Routes>
-  <Route path="/AdminHome" element={<AdminHome />} />
-  <Route path="/AdminProducts" element={<AdminProducts />} />
+        <Route path="/AdminProducts" element={<AdminProducts />} />
   <Route path="/AdminOrders" element={<AdminOrders />} />
   <Route path="/AdminUsers" element={<AdminUsers />} />
-</Routes>
-<Footer/>
-</BrowserRouter>
+      </Routes>
+      <Footer/>
+    </BrowserRouter>
+
 </>
   );
 }

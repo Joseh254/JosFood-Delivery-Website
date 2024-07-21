@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { api_url } from "../../../../utills/config";
 import axios from "axios";
 import useUserStore from "../../../../Store/UserStore";
+import AdminHeader from "../../../Components/AdminHeader/AdminHeader";
 function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,8 +41,16 @@ function AdminProducts() {
   if (error) {
     return <p>{error.message}</p>;
   }
+
+
+
+  async function deleteProduct(){
+    const response = await axios.delete("http://localhost:3000/api/products/deleteproduct")
+    console.log(response);
+  }
   return (
     <>
+    <AdminHeader/>
       <section className="Adminproducts">
         {products.map((product) => (
           <div className="Adminproductscontainer" key={product.id}>
@@ -52,7 +61,10 @@ function AdminProducts() {
 
             <div className="adminoperationButtons">
               <button className="editbtn">Edit</button>
-              <button className="delbtn">Delete</button>
+              <button
+               className="delbtn"
+               onClick={deleteProduct}
+               >Delete</button>
             </div>
           </div>
         ))}

@@ -16,23 +16,18 @@ function Login() {
     try {
       setLoading(true);
       setError("");
-      const response = await axios.post(`${api_url}/api/users/login`, formState,{ withCredentials: true });
-      console.log(response);
+      const response = await axios.post(`${api_url}/api/users/login`, formState, { withCredentials: true });
       const data = response.data;
-      console.log(data.data.role);
-      if(data.success ===true){
+
+      if (data.success) {
+        changeUserInformation(data.data);
         if (data.data.role === "admin") {
-          changeUserInformation(data.data.firstName); 
-          console.log(data.data.firstName);
           navigate("/AdminHome");
-        } if(data.data.role==="user") {
-          navigate("/Cart")
+        } else {
+          navigate("/Cart");
         }
-        else{
-          setError("Failed to load try again later")
-        }
-      }else{
-        setError(error.message)
+      } else {
+        setError("Failed to log in, try again later");
       }
     } catch (error) {
       setError(error.message);
@@ -59,7 +54,7 @@ function Login() {
     <section className="loginsection">
       <div className="loginpage">
         <form onSubmit={formik.handleSubmit}>
-          <div className="">
+          <div>
             <h1>Log in to your account</h1>
             <p>
               Don't have an account? <Link to="/Signup">Create Account</Link>

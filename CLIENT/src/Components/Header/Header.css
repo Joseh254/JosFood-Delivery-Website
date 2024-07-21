@@ -39,3 +39,14 @@
   background-color: #000000;
   color: #ffffff;
 }
+.adminbutton{
+  background-color: #000000;
+  color: #ffffff;
+  padding: .5rem;
+}
+.logout{
+  background-color: red;
+  color: white;
+  width: 10rem;
+  padding: .5rem;
+}

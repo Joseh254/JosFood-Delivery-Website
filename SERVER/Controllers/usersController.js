@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function createuser(request, response) {
   try {
-    const { firstName, lastName, email, password ,role} = request.body;
+    const { firstName, lastName, email, password, role } = request.body;
 
     const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -15,7 +15,7 @@ export async function createuser(request, response) {
         lastName,
         email,
         password: hashedPassword,
-        role
+        role,
       },
     });
 
@@ -33,7 +33,7 @@ export async function loginUser(request, response) {
   const { email, password, firstName } = request.body;
   try {
     const user = await prisma.users.findFirst({
-      where: { email:email, firstName: firstName },
+      where: { email: email, firstName: firstName },
     });
 
     if (user) {
@@ -45,71 +45,86 @@ export async function loginUser(request, response) {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          role:user.role
+          role: user.role,
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "100h",
         });
 
-        response.cookie("access_token", token).json({success:true,message:"You are loged in" , data:payload})
-    
-
+        response
+          .cookie("access_token", token)
+          .json({ success: true, message: "You are loged in", data: payload });
       } else {
-        return  response
+        return response
           .status(401)
           .json({ success: false, message: "Wrong email or password" });
       }
     } else {
-        return response.status(404).json({ success: false, message: "User not found" });
+      return response
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
   } catch (error) {
     console.log(error.message);
-    return response.status(500).json({ success: false, message: "User not Found" });
+    return response
+      .status(500)
+      .json({ success: false, message: "User not Found" });
   }
 }
 
 export async function getAllUsers(request, response) {
-    try {
-      const users = await prisma.users.findMany();
-  
-      if (users) {
-        return response.status(200).json({ success: true, data: users });
-      } else {
-        return response.status(400).json({ success: false, message: "Users not found" });
-      }
-    } catch (error) {
-      console.log(error.message);
-      return response.status(400).json({ success: false, message: "An error occurred" });
-    }
-  }
+  try {
+    const users = await prisma.users.findMany();
 
-  export async function deleteUser(request,response){
-    const {id} = request.params
-    try {
-        await prisma.users.delete({
-            where:{id:id}
-        })
-        return response.status(200).json({success:true,message:"user deleted"})
-    } catch (error) {
-        console.log(error.message);
-        return response.status(404).json({success:false,message:"user not found"})
-        
+    if (users) {
+      return response.status(200).json({ success: true, data: users });
+    } else {
+      return response
+        .status(400)
+        .json({ success: false, message: "Users not found" });
     }
-  }
-
-  export async function getSingleuser(request, response){
-    const {id} = request.params
-    try {
-       const user= await prisma.users.findFirst({
-            where:{id:id}
-        }) 
-        if(user){
-            response.status(200).json({success:true,data:user})
-        }return response.status(404).json({success:false,message:"user not found"})
-    } catch (error) {
+  } catch (error) {
     console.log(error.message);
-     return response.status(404).json({success:false, message:"user not found"})   
-    }
+    return response
+      .status(400)
+      .json({ success: false, message: "An error occurred" });
   }
-  
+}
+
+export async function deleteUser(request, response) {
+  const { id } = request.params;
+  try {
+    await prisma.users.delete({
+      where: { id: id },
+    });
+    return response
+      .status(200)
+      .json({ success: true, message: "user deleted" });
+  } catch (error) {
+    console.log(error.message);
+    return response
+      .status(404)
+      .json({ success: false, message: "user not found" });
+  }
+}
+
+export async function getSingleuser(request, response) {
+  const { id } = request.params;
+  try {
+    const user = await prisma.users.findFirst({
+      where: { id: id },
+    });
+    if (user) {
+      response.status(200).json({ success: true, data: user });
+    }
+    return response
+      .status(404)
+      .json({ success: false, message: "user not found" });
+  } catch (error) {
+    console.log(error.message);
+    return response
+      .status(404)
+      .json({ success: false, message: "user not found" });
+  }
+}

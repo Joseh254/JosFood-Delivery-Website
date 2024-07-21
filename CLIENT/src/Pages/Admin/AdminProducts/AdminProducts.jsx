@@ -1,22 +1,29 @@
-import React from 'react'
-import './AdminProducts.css'
-import { useState, useEffect } from 'react';
-import { api_url } from '../../../../utills/config';
-import axios from 'axios';
+import React from "react";
+import "./AdminProducts.css";
+import { useState, useEffect } from "react";
+import { api_url } from "../../../../utills/config";
+import axios from "axios";
+import useUserStore from "../../../../Store/UserStore";
 function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  useEffect(() => { 
+  const user = useUserStore((state)=>state.user)
+
+  useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await axios.get(
-          `${api_url}/api/products/getAllproducts`,
-        );
-        console.log(response);
-        setProducts(response.data.data);
-        console.log(response.data.data);
-        setLoading(false);
+        if (user){
+          const response = await axios.get(
+            `${api_url}/api/products/getAllproducts`
+            ,{ withCredentials: true }
+          );
+          setProducts(response.data.data);
+          setLoading(false);
+        }
+        else{
+          setError("you are not logged in")
+        }
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -40,12 +47,12 @@ function AdminProducts() {
           <div className="Adminproductscontainer" key={product.id}>
             <img src={product.productImage} alt={product.productImage} />
             <h1>{product.productName}</h1>
-            <p>{product.productDescription}</p> 
+            <p>{product.productDescription}</p>
             <p className="pricenow">Price Ksh{product.productPrice}</p>
 
-            <div className='adminoperationButtons'>
-            <button className='editbtn'>Edit</button>
-            <button className='delbtn'>Delete</button>
+            <div className="adminoperationButtons">
+              <button className="editbtn">Edit</button>
+              <button className="delbtn">Delete</button>
             </div>
           </div>
         ))}

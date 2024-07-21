@@ -14,15 +14,18 @@ function Signin() {
     try {
       setLoading(true);
       setError("");
-      const response = await axios.post("http://localhost:3000/api/users/register",values);
+      const response = await axios.post(
+        "http://localhost:3000/api/users/register",
+        values,
+      );
       console.log(response);
-      if (response.data.success="true") {
+      if ((response.data.success = "true")) {
         navigate("/Login");
       } else {
         setError(response.data.message);
       }
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     } finally {
       setLoading(false);
     }

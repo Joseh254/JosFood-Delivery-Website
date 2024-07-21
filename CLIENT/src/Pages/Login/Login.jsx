@@ -16,13 +16,14 @@ function Login() {
     try {
       setLoading(true);
       setError("");
-      const response = await axios.post(`${api_url}/api/users/login`, formState);
+      const response = await axios.post(`${api_url}/api/users/login`, formState,{ withCredentials: true });
       console.log(response);
       const data = response.data;
       console.log(data.data.role);
       if(data.success ===true){
         if (data.data.role === "admin") {
-          changeUserInformation(data.user); 
+          changeUserInformation(data.data.firstName); 
+          console.log(data.data.firstName);
           navigate("/AdminHome");
         } if(data.data.role==="user") {
           navigate("/Cart")

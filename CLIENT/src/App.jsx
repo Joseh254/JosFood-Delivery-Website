@@ -15,22 +15,21 @@ import Cart from "./Pages/Cart/Cart";
 function App() {
   return (
     <>
-    <BrowserRouter>
-      <Header />
-      <Routes>
-      <Route path="/AdminHome" element={<AdminHome />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/AdminProducts" element={<AdminProducts />} />
-        <Route path="/AdminOrders" element={<AdminOrders />} />
-        <Route path="/AdminUsers" element={<AdminUsers />} />
-      </Routes>
-      <Footer/>
-    </BrowserRouter>
-
-</>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/AdminHome" element={<AdminHome />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/AdminProducts" element={<AdminProducts />} />
+          <Route path="/AdminOrders" element={<AdminOrders />} />
+          <Route path="/AdminUsers" element={<AdminUsers />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 }
 

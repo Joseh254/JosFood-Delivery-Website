@@ -9,7 +9,7 @@ nav {
   position: sticky;
   font-family: Arial, sans-serif;
   top: 0;
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 
 nav ul {

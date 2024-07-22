@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { useNavigate, useLocation } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
@@ -43,9 +44,9 @@ function Header() {
   return (
     <header className="navigationbar">
       <div className="favdishes">
-        <p>
+        <Link to ="/">
           <GrMenu />
-        </p>
+        </Link>
         <h2>Uber Eats</h2>
       </div>
 

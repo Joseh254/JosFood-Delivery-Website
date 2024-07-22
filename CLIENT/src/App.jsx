@@ -9,7 +9,7 @@ import AdminHome from "./Pages/Admin/AdminHome/AdminHome";
 import AdminProducts from "./Pages/Admin/AdminProducts/AdminProducts";
 import AdminOrders from "./Pages/Admin/AdminOrders/AdminOrders";
 import AdminUsers from "./Pages/Admin/AdminUsers/AdminUsers";
-import AdminHeader from "./Components/AdminHeader/AdminHeader";
+import AddProduct from "./Pages/Admin/Add product/AddProduct";
 import Cart from "./Pages/Cart/Cart";
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
           <Route path="/AdminProducts" element={<AdminProducts />} />
           <Route path="/AdminOrders" element={<AdminOrders />} />
           <Route path="/AdminUsers" element={<AdminUsers />} />
+          <Route path="/AddProduct" element={<AddProduct />} />
         </Routes>
         <Footer />
       </BrowserRouter>

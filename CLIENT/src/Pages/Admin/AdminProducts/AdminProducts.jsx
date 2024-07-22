@@ -4,6 +4,7 @@ import { api_url } from "../../../../utills/config";
 import axios from "axios";
 import useUserStore from "../../../../Store/UserStore";
 import AdminHeader from "../../../Components/AdminHeader/AdminHeader";
+import { Link } from "react-router-dom";
 
 function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -23,7 +24,7 @@ function AdminProducts() {
           setLoading(false);
         }
       } else {
-        setError("You are not logged in");
+        setError("404 - Page Not Found");
         setLoading(false);
       }
     }
@@ -48,6 +49,7 @@ function AdminProducts() {
   if (error) {
     return <p>{error}</p>;
   }
+  
 
   return (
     <>
@@ -71,7 +73,8 @@ function AdminProducts() {
             </div>
           </div>
         ))}
-      </section>
+<Link to ="/AddProduct"><button className="addProductbtn" >+</button></Link>      </section>
+      
     </>
   );
 }

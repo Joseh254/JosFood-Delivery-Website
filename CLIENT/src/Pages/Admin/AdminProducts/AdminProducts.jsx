@@ -63,7 +63,7 @@ function AdminProducts() {
             <p className="pricenow">Price Ksh {product.productPrice}</p>
 
             <div className="adminoperationButtons">
-              <button className="editbtn">Edit</button>
+              <Link to='/EditProduct'><button className="editbtn">Edit</button></Link>
               <button
                 className="delbtn"
                 onClick={() => deleteProduct(product.id)}

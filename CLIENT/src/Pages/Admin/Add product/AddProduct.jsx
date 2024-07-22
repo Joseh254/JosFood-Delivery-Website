@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from "formik";
 import axios from "axios";
 import useUserStore from '../../../../Store/UserStore';
+import AdminHeader from '../../../Components/AdminHeader/AdminHeader';
 import "./AddProduct.css"; 
 
 function AddProduct() {
@@ -57,6 +58,8 @@ function AddProduct() {
   });
 
   return (
+    <>
+    <AdminHeader/>
     <div className='addProductContainer'>
       <h1>Add Products To Database</h1>
       <form onSubmit={formik.handleSubmit}>
@@ -133,6 +136,7 @@ function AddProduct() {
       </form>
       
     </div>
+    </>
   );
 }
 

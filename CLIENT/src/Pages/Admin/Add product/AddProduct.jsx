@@ -23,7 +23,6 @@ function AddProduct() {
         );
       
         if (response.data.success === true) {
-          alert("Product added successfully!");
           setMessage("Product Added to Database")
           formik.resetForm();
         } else {
@@ -59,12 +58,13 @@ function AddProduct() {
 
   return (
     <div className='addProductContainer'>
+      <h1>Add Products To Database</h1>
       <form onSubmit={formik.handleSubmit}>
-        <div className="signininputs">
+        <div className="AddProducts">
           <label>Product Name</label>
           <input
             type="text"
-            placeholder="Product Name"
+            placeholder=" Enter Product Name"
             name="productName"
             value={formik.values.productName}
             onChange={formik.handleChange}
@@ -76,11 +76,11 @@ function AddProduct() {
           )}
         </div>
 
-        <div className="signininputs">
+        <div className="AddProducts">
           <label>Product Price</label>
           <input
             type="number"
-            placeholder="Product Price"
+            placeholder=" Enter Product Price"
             name="productPrice"
             value={formik.values.productPrice}
             onChange={formik.handleChange}
@@ -92,11 +92,11 @@ function AddProduct() {
           )}
         </div>
 
-        <div className="signininputs">
+        <div className="AddProducts">
           <label>Product Description</label>
           <input
             type="text"
-            placeholder="Product Description"
+            placeholder="Enter Product Description"
             name="productDescription"
             value={formik.values.productDescription}
             onChange={formik.handleChange}
@@ -108,11 +108,11 @@ function AddProduct() {
           )}
         </div>
 
-        <div className="signininputs">
-          <label>Product Image</label>
+        <div className="AddProducts">
+          <label>Product Image URL</label>
           <input
             type="text"
-            placeholder="Product Image"
+            placeholder="Enter Product Image URL:"
             name="productImage"
             value={formik.values.productImage}
             onChange={formik.handleChange}
@@ -126,10 +126,12 @@ function AddProduct() {
 
         {error && <p className="error">{error}</p>}
         
-        <button type="submit" className="AddProduct" disabled={loading}>
+        <button type="submit" className="AddProductbtn" disabled={loading}>
           {loading ? "Please wait..." : "Add product"}
         </button>
+        <p className='addedToDbMessage'>{message}</p>
       </form>
+      
     </div>
   );
 }

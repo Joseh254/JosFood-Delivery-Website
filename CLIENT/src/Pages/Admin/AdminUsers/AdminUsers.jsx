@@ -11,16 +11,16 @@ function AdminUsers() {
   const userr = useUserStore((state)=>state.user)
 
   useEffect(() => {
-    if (userr.role==="admin"){
+    
 
-          const fetchUsers = async () => {
+      const fetchUsers = async () => {
+        if (userr.role==="admin"){
       try {
         const response = await axios.get('http://localhost:3000/api/users/users', { withCredentials: true });
-        console.log(response.data.data); // Log the response data to inspect its structure
         if (Array.isArray(response.data.data)) {
           setUsers(response.data.data);
         } else {
-          setError(('Expected an array of users'));
+          setError(('an error occured'));
         }
       } catch (error) {
         setError(error);
@@ -28,11 +28,11 @@ function AdminUsers() {
       } finally {
         setLoading(false);
       }
-    };
+    }; 
     }
 
     fetchUsers();
-  }, []);
+  }, [userr]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -45,13 +45,18 @@ function AdminUsers() {
   return (
     <>
       <AdminHeader />
+      <h2>Member of Jos food Delivery</h2>
       <div className="admin-users">
-        <h2>User List</h2>
+        
         {Array.isArray(users) && users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id}>
-              <p>{user.name}</p>
-              <p>{user.email}</p>
+            <div key={user.id} className='userss'>
+
+              <p>First Name: {user.firstName}</p>
+              <p>Last Name: {user.lastName}</p>
+              <p>Role: {user.role}</p>
+              <p> Email: {user.email}</p>
+              
             </div>
           ))
         ) : (

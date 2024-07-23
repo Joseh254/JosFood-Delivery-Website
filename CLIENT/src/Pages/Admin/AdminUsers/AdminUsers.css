@@ -1,0 +1,14 @@
+.admin-users{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-width: 100%;
+}
+.userss{
+    border: solid 2px gold;
+    padding: 1rem;
+    background-color: antiquewhite;
+}

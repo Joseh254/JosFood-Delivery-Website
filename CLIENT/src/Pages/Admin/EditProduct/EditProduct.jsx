@@ -14,16 +14,20 @@ function EditProduct() {
     const user = useUserStore((state) => state.user);
   
     const handleSubmit = async (values) => {
-      console.log(user.role);
+      
       if (user.role === "admin") {
         try {
           setLoading(true);
           setError("");
-          const response = await axios.post(
+
+          
+          const response = await axios.patch(
             `${api_url}/api/products/updateproduct/${productId}, { withCredentials: true `,
             values,
             { withCredentials: true }
           );
+
+
         
           if (response.data.success === true) {
             setMessage("Product updated succesfuly")

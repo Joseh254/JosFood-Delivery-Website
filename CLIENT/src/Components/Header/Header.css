@@ -19,6 +19,10 @@
 .favdishes p {
   font-size: 2rem;
 }
+.favdishes span{
+  color: rgb(255, 213, 0);
+  font-weight: 900;
+}
 .loginandsignupbuttons {
   display: flex;
   flex-direction: row;

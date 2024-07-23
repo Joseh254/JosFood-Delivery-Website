@@ -11,7 +11,7 @@ function AdminProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const user = useUserStore((state) => state.user);
-
+  
   useEffect(() => {
     async function fetchProducts() {
       if (user) {

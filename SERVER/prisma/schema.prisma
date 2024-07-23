@@ -22,14 +22,23 @@ model users {
   role      String?  @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  cart cart[]
+  
 }
-
-
 model products{
   id String @id @default(uuid())
   productName String @map("productName")
   productPrice Int @map("productPrice")
   productDescription String @map("productDescription")
   productImage String @map("productImage")
-   @@map("products")
+  cart cart[]
+  @@map("products")
+}
+model cart{
+  id String @id @default(uuid()) 
+  userid String
+  user users @relation(fields: [userid],references: [id])
+  productid String
+  product products @relation(fields: [productid],references: [id])
+  creaeAt DateTime @default(now())
 }

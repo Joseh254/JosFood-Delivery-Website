@@ -47,7 +47,7 @@ function Header() {
         <Link to ="/">
           <GrMenu />
         </Link>
-        <h2>Uber Eats</h2>
+        <h2>Jos <span>Food</span> Delivery</h2>
       </div>
 
       <div className="loginandsignupbuttons">

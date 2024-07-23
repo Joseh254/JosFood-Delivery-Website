@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TypingAnimator from "react-typing-animator";
 import axios from "axios";
 import { api_url } from "../../../utills/config";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
@@ -77,7 +78,7 @@ function Home() {
               <strike>Was Ksh{product.productPrice + 100}</strike>
             </p>
             <p className="pricenow">Now Ksh{product.productPrice}</p>
-            <button>Add to Cart</button>
+         <Link to='/Login'>   <button>Add to Cart</button></Link>
           </div>
         ))}
       </section>

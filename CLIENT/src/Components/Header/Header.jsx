@@ -3,6 +3,7 @@ import { GrMenu } from "react-icons/gr";
 import { useNavigate, useLocation } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
 import { Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
 import "./Header.css";
 
 function Header() {
@@ -39,6 +40,10 @@ function Header() {
     navigate("/Login");
   };
 
+  function goToCart(){
+    navigate("/Cart")
+  }
+
   const isLoginPage = location.pathname === "/Login";
 
   return (
@@ -53,7 +58,7 @@ function Header() {
       <div className="loginandsignupbuttons">
         {signedIn && !isLoginPage ? (
           <>
-            {isAdmin && (
+            {isAdmin && signedIn && (
               <button
                 className="adminbutton"
                 onClick={() => navigate("/AdminHome")}
@@ -61,9 +66,13 @@ function Header() {
                 Welcome back {user.firstName}
               </button>
             )}
+
+            <button className="cartcounter" onClick={goToCart}><FaShoppingCart/>(0)</button>
             <button id="logout" className="logout" onClick={handleLogout}>
               Logout
             </button>
+            
+
           </>
         ) : (
           <>

@@ -24,7 +24,7 @@ function Login() {
         if (data.data.role === "admin") {
           navigate("/AdminHome");
         } else {
-          navigate("/Cart");
+          navigate("/");
         }
       } else {
         setError("Failed to log in, try again later");

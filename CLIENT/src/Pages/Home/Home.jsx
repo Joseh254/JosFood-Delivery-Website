@@ -3,21 +3,37 @@ import TypingAnimator from "react-typing-animator";
 import axios from "axios";
 import { api_url } from "../../../utills/config";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import useUserStore from "../../../Store/UserStore";
 import "./Home.css";
 
 function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartProduct, setCartProduct] = useState(null)
+  const navigate = Navigate
+  const user = useUserStore((state)=>state.user)
   useEffect(() => {
+
+ async function fetchCartProducts(){
+if (user){
+  try {
+    const response = axios.get(`${api_url}/api/cart/getCart/${user.userid}`,{ withCredentials: true });
+    console.log(response);
+    setCartProduct(response.data)
+  } catch (error) {
+    setError(error.message)
+  }
+}
+};
+
     async function fetchProducts() {
       try {
         const response = await axios.get(
           `${api_url}/api/products/getAllproducts`,
         );
-        console.log(response);
         setProducts(response.data.data);
-        console.log(response.data.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -26,7 +42,36 @@ function Home() {
     }
 
     fetchProducts();
-  }, []);
+    fetchCartProducts();
+  }, [user]);
+
+
+  async function handleAddCart(){
+    if(!user){
+alert("Please log in to add products to the cart");
+
+return;
+    }
+    if(cartProduct.some(product=>product.productid ===products.id)){
+      alert("This product already in your cart.");
+      return;
+    }
+    try {
+      const cartProduct = {
+        userid: user.id,
+        productid: products.id,
+      };
+
+      const response =  await axios.post("http://localhost:3000/api/cart/createCart",cartProduct,{ withCredentials: true });
+      setCartProduct([...cartProduct, response.data]);
+      updateCartCount(cartProduct.length +1);
+      showNotification('Product added to cart')
+    } catch (error) {
+      console.log(error);
+      setError("there was an error getting your cart")
+    }
+  }
+
 
   if (loading) {
     return <p>Loading please wait...</p>;
@@ -35,6 +80,7 @@ function Home() {
   if (error) {
     return <p>{error.message}</p>;
   }
+
 
   const textArray = ["near you", "Call Us on", "+254768163608"];
   const animation = (
@@ -78,7 +124,7 @@ function Home() {
               <strike>Was Ksh{product.productPrice + 100}</strike>
             </p>
             <p className="pricenow">Now Ksh{product.productPrice}</p>
-         <Link to='/Login'>   <button>Add to Cart</button></Link>
+          <button onClick={()=>handleAddCart(product)}>Add to Cart</button>
           </div>
         ))}
       </section>

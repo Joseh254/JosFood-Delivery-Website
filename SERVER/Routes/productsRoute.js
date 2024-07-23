@@ -8,7 +8,7 @@ import {
 } from "../Controllers/productsController.js";
 import VerifyAdmin from "../Middleware/VerifyAdmin.js";
 const router = Router();
-router.post("/createProduct", VerifyAdmin, createProduct);
+router.post("/createProduct", createProduct);
 router.get("/getAllproducts",  GetAllProducts);
 router.get("/getOneproduct/:id", GetOneProduct);
 router.patch("/updateproduct/:id", VerifyAdmin, UpdateProduct);

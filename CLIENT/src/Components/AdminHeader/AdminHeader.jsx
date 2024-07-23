@@ -10,7 +10,7 @@ function AdminHeader() {
       <ul className={menuOpen ? "open" : ""}>
         <li>
           <NavLink 
-            to="/AdminHome"
+            to="/"
             end
             className={({ isActive }) => (isActive ? "active" : "")}
           >

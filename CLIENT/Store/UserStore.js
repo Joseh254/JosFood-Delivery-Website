@@ -10,7 +10,7 @@ const userStore = (set) => ({
   },
   clearUserInformation: () => {
     set(() => ({
-      user: null,
+      user: null, 
     }));
   },
 });

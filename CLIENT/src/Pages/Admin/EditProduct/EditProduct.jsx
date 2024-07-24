@@ -26,17 +26,22 @@ function EditProduct() {
   });
 
   const fetchProduct = async () => {
-    try {
-      const response = await axios.get(`${api_url}/api/products/getOneproduct/${productId}`, { withCredentials: true });
-      console.log(response);
-      if (response.data.success) {
-        formik.setValues(response.data.data);
-      } else {
-        setError("Failed to fetch product data.");
-      }
-    } catch (error) {
-      setError(error.message);
+if (user.role==='admin'){
+  try {
+    const response = await axios.get(`${api_url}/api/products/getOneproduct/${productId}`, { withCredentials: true });
+    console.log(response.data);
+    if (response.data.success) {
+      formik.setValues(response.data.data);
+    } else {
+      setError("Failed to fetch product data.");
     }
+  } catch (error) {
+    setError(error.message);
+  }
+}else{
+setError("unouthorized")
+navigate("Page404")
+}
   };
 
   useEffect(() => {

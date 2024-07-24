@@ -11,6 +11,7 @@ import AdminOrders from "./Pages/Admin/AdminOrders/AdminOrders";
 import AdminUsers from "./Pages/Admin/AdminUsers/AdminUsers";
 import AddProduct from "./Pages/Admin/Add product/AddProduct";
 import EditProduct from "./Pages/Admin/EditProduct/EditProduct";
+import Page404 from "./Pages/Admin/Page404/Page404";
 import Cart from "./Pages/Cart/Cart";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/AdminHome" element={<AdminHome />} />
           <Route path="/" element={<Home />} />
           <Route path="/Cart" element={<Cart />} />
+          <Route path="/Page404" element={< Page404/>} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/AdminProducts" element={<AdminProducts />} />

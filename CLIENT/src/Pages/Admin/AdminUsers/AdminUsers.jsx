@@ -8,6 +8,7 @@ function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSucccess] =useState("")
   const userr = useUserStore((state) => state.user);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ function AdminUsers() {
       }, { withCredentials: true });
 
       if (response.status === 200) {
+        setSucccess("added to database")
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
             user.id === userId ? { ...user, role: isAdmin ? 'user' : 'admin' } : user
@@ -74,6 +76,7 @@ function AdminUsers() {
               <button className='adminTogglebtn' onClick={() => toggleAdminStatus(user.id, user.role === 'admin')}>
                 {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
               </button>
+              <p>{success}</p>
             </div>
           ))
         ) : (

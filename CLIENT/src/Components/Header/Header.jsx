@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { useNavigate, useLocation } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
+import useCounterStore from "../../../Store/CounterStore";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import "./Header.css";
@@ -11,6 +12,8 @@ function Header() {
   const location = useLocation();
   const user = useUserStore((state) => state.user);
   const changeUserInformation = useUserStore((state) => state.changeUserInformation);
+  const cartCount = useCounterStore((state) => state.cartCount);
+  const setCartCount = useCounterStore((state) => state.updateCartCount);
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -24,6 +27,18 @@ function Header() {
       setIsAdmin(false);
     }
   }, [user]);
+
+  useEffect(() => {
+    // Fetch cart count from local storage
+    const fetchCartCountFromLocalStorage = () => {
+      const count = localStorage.getItem('cartCount');
+      if (count) {
+        setCartCount(Number(count));
+      }
+    };
+
+    fetchCartCountFromLocalStorage();
+  }, [setCartCount]);
 
   const handleSignInToggle = () => {
     navigate("/Signup");
@@ -40,8 +55,8 @@ function Header() {
     navigate("/Login");
   };
 
-  function goToCart(){
-    navigate("/Cart")
+  function goToCart() {
+    navigate("/Cart");
   }
 
   const isLoginPage = location.pathname === "/Login";
@@ -49,7 +64,7 @@ function Header() {
   return (
     <header className="navigationbar">
       <div className="favdishes">
-        <Link to ="/">
+        <Link to="/">
           <GrMenu />
         </Link>
         <h2>Jos <span>Food</span> Delivery</h2>
@@ -67,12 +82,12 @@ function Header() {
               </button>
             )}
 
-            <button className="cartcounter" onClick={goToCart}><FaShoppingCart/>(0)</button>
+            <button className="cartcounter" onClick={goToCart}>
+              <FaShoppingCart />({cartCount})
+            </button>
             <button id="logout" className="logout" onClick={handleLogout}>
               Logout
             </button>
-            
-
           </>
         ) : (
           <>

@@ -2,37 +2,36 @@ import React, { useEffect, useState } from "react";
 import TypingAnimator from "react-typing-animator";
 import axios from "axios";
 import { api_url } from "../../../utills/config";
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
+import useCounterStore from "../../../Store/CounterStore";
 import "./Home.css";
 
 function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cartProduct, setCartProduct] = useState(null)
-  const navigate = Navigate
-  const user = useUserStore((state)=>state.user)
-  useEffect(() => {
+  const [cartProduct, setCartProduct] = useState([]);
+  const updateCartCount = useCounterStore((state) => state.updateCartCount);
+  const navigate = Navigate;
+  const user = useUserStore((state) => state.user);
 
- async function fetchCartProducts(){
-if (user){
-  try {
-    const response = axios.get(`${api_url}/api/cart/getCart/${user.userid}`,{ withCredentials: true });
-    console.log(response);
-    setCartProduct(response.data)
-  } catch (error) {
-    setError(error.message)
-  }
-}
-};
+  useEffect(() => {
+    async function fetchCartProducts() {
+      if (user) {
+        try {
+          const response = await axios.get(`${api_url}/api/cart/getCart/${user.userid}`, { withCredentials: true });
+          console.log(response);
+          setCartProduct(response.data.cartProduct || []); // Ensure response.data is an array
+        } catch (error) {
+          setError(error.message);
+        }
+      }
+    }
 
     async function fetchProducts() {
       try {
-        const response = await axios.get(
-          `${api_url}/api/products/getAllproducts`,
-        );
+        const response = await axios.get(`${api_url}/api/products/getAllproducts`);
         setProducts(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -45,33 +44,40 @@ if (user){
     fetchCartProducts();
   }, [user]);
 
-
-  async function handleAddCart(){
-    if(!user){
-alert("Please log in to add products to the cart");
-
-return;
-    }
-    if(cartProduct.some(product=>product.productid ===products.id)){
-      alert("This product already in your cart.");
+  async function handleAddCart(product) {
+    if (!user) {
+      alert("Please log in to add products to the cart");
       return;
     }
+
+    // Log the user object
+    console.log("User object:", user);
+
+    // Ensure cartProduct is an array before using 'some'
+    if (Array.isArray(cartProduct) && cartProduct.some((item) => item.productid === product.id)) {
+      alert("This product is already in your cart.");
+      return;
+    }
+
     try {
-      const cartProduct = {
-        userid: user.id,
-        productid: products.id,
+      const newCartProduct = {
+        userid: user.userid, // Ensure this is defined
+        productid: product.id,
       };
 
-      const response =  await axios.post("http://localhost:3000/api/cart/createCart",cartProduct,{ withCredentials: true });
-      setCartProduct([...cartProduct, response.data]);
-      updateCartCount(cartProduct.length +1);
-      showNotification('Product added to cart')
+      // Log the payload being sent
+      console.log("Payload being sent:", newCartProduct);
+
+      const response = await axios.post(`${api_url}/api/cart/createCart`, newCartProduct, { withCredentials: true });
+      console.log(response);
+      setCartProduct((prevCart) => [...prevCart, response.data.cartProduct]);
+      updateCartCount(cartProduct.length + 1);
+      // showNotification('Product added to cart'); // Uncomment if you have a showNotification function
     } catch (error) {
-      console.log(error);
-      setError("there was an error getting your cart")
+      console.log("Error Response:", error.response);
+      setError("There was an error adding the product to your cart.");
     }
   }
-
 
   if (loading) {
     return <p>Loading please wait...</p>;
@@ -80,7 +86,6 @@ return;
   if (error) {
     return <p>{error.message}</p>;
   }
-
 
   const textArray = ["near you", "Call Us on", "+254768163608"];
   const animation = (
@@ -96,11 +101,12 @@ return;
       height="60px"
     />
   );
+
   return (
     <>
       <div className="herocontainer">
         <div className="heroheading">
-          <h1>Order delivery:{animation} </h1>
+          <h1>Order delivery: {animation}</h1>
         </div>
 
         <div className="heroinputs">
@@ -124,7 +130,7 @@ return;
               <strike>Was Ksh{product.productPrice + 100}</strike>
             </p>
             <p className="pricenow">Now Ksh{product.productPrice}</p>
-          <button onClick={()=>handleAddCart(product)}>Add to Cart</button>
+            <button onClick={() => handleAddCart(product)}>Add to Cart</button>
           </div>
         ))}
       </section>

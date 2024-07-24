@@ -128,3 +128,23 @@ export async function getSingleuser(request, response) {
       .json({ success: false, message: "user not found" });
   }
 }
+
+
+export async function ToggleAdmin(request,response){
+ const {role}=request.body;
+ try {
+  const { id } = request.params;
+  let toggleuser;
+  if (role) {
+    toggleuser = await prisma.users.update({
+      where: { id: id },
+      data: { role: role },
+    });
+
+  }
+return response.status(200).json({success:true,message:"Toggle succesful"})
+ } catch (error) {
+  console.log(error.message);
+  return response.status(400).json({success:false, message:"failed to update user"})
+ }
+}

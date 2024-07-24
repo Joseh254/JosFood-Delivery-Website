@@ -46,8 +46,8 @@ export async function removeCart(request, response) {
   const { id } = request.params;
 
   try {
-    await prisma.delete({
-      where:{id: String(id)}
+    await prisma.cart.delete({
+      where:{id: id}
     })
     response.status(204).json({success:true, message:"product removed from cart"})
   } catch (error) {

@@ -61,22 +61,19 @@ function Home() {
 
     try {
       const newCartProduct = {
-        userid: user.userid, // Ensure this is defined
+        userid: user.id,
         productid: product.id,
       };
-
-      // Log the payload being sent
-      console.log("Payload being sent:", newCartProduct);
-
+    
       const response = await axios.post(`${api_url}/api/cart/createCart`, newCartProduct, { withCredentials: true });
-      console.log(response);
+      console.log('Add to cart response:', response.data);
       setCartProduct((prevCart) => [...prevCart, response.data.cartProduct]);
       updateCartCount(cartProduct.length + 1);
-      // showNotification('Product added to cart'); // Uncomment if you have a showNotification function
     } catch (error) {
-      console.log("Error Response:", error.response);
-      setError("There was an error adding the product to your cart.");
+      console.log('Error Response:', error.response);
+      setError('There was an error adding the product to your cart.');
     }
+    
   }
 
   if (loading) {

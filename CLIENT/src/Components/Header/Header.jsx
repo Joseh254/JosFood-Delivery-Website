@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GrMenu } from "react-icons/gr";
+import { FaHome } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
 import useCounterStore from "../../../Store/CounterStore";
@@ -64,8 +64,8 @@ function Header() {
   return (
     <header className="navigationbar">
       <div className="favdishes">
-        <Link to="/">
-          <GrMenu />
+        <Link to="/" className="homelink">
+          <FaHome /> Home
         </Link>
         <h2>Jos <span>Food</span> Delivery</h2>
       </div>

@@ -12,11 +12,12 @@ function Cart({ toggleCartPopup, updateCartCount }) {
   useEffect(() => {
     const fetchCartItems = async () => {
       if (userr && userr.id) {
+        console.log(userr);
         console.log('Fetching cart items for user:', userr.id);
         try {
           const response = await axios.get(`http://localhost:3000/api/cart/getCart/${userr.id}`, { withCredentials: true });
-          console.log('Cart Items Response:', response.data);
-          setCartProducts(response.data.cartProduct || []); // Ensure it's an array
+          console.log('Cart Items Response:', response.data.cartProduct);
+          setCartProducts(response.data.cartProduct || []); 
           setLoading(false);
         } catch (error) {
           console.error('Error fetching cart items:', error.message);
@@ -24,18 +25,17 @@ function Cart({ toggleCartPopup, updateCartCount }) {
           setLoading(false);
         }
       } else {
-        console.warn('User object is not available');
         setLoading(false);
       }
     };
 
     fetchCartItems();
-  }, [userr]); // Include userr as a dependency
+  }, [userr]); 
 
   const handleDeleteFromCart = async (productId) => {
     try {
       console.log('Deleting cart item with ID:', productId);
-      await axios.delete(`http://localhost:3000/api/cart/removeCart/${productId}`, { withCredentials: true });
+      await axios.delete(`http://localhost:3000/api/cart/removeCart//${productId}`, { withCredentials: true });
       const updatedCartProducts = cartProducts.filter(product => product.id !== productId);
       setCartProducts(updatedCartProducts);
       updateCartCount(updatedCartProducts.length); 
@@ -70,13 +70,13 @@ function Cart({ toggleCartPopup, updateCartCount }) {
               {cartProducts.map(product => (
                 <div key={product.id} className='cart-item'>
                   <p>{product.product.productName}</p>
-                  <p>${product.product.productPrice}</p>
+                  <p>Ksh {product.product.productPrice}</p>
                   <button onClick={() => handleDeleteFromCart(product.id)}>Remove</button>
                 </div>
               ))}
             </div>
             <div className='cart-total'>
-              <p>Total: ${calculateTotal()}</p>
+              <p>Total: Ksh {calculateTotal()}</p>
             </div>
             <button className='checkout-btn'>Checkout</button>
           </>

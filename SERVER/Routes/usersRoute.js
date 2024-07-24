@@ -7,6 +7,7 @@ import {
   createuser,
   deleteUser,
   getSingleuser,
+  ToggleAdmin
 } from "../Controllers/usersController.js";
 const router = Router();
 
@@ -15,5 +16,6 @@ router.get("/users", VerifyAdmin, getAllUsers);
 router.post("/login", loginUser);
 router.delete("/delete/:id", VerifyAdmin, deleteUser);
 router.get("/user/:id", VerifyAdmin, getSingleuser);
+router.patch("/toggleAdmin/:id",ToggleAdmin)
 
 export default router;

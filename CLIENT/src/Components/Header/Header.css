@@ -9,6 +9,9 @@
   width: 100%;
   padding: 0.5rem;
 }
+.homelink{
+  color: #000000;
+}
 .favdishes {
   display: flex;
   flex-direction: row;

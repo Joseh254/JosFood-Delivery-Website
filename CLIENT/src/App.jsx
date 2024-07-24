@@ -28,7 +28,7 @@ function App() {
           <Route path="/AdminOrders" element={<AdminOrders />} />
           <Route path="/AdminUsers" element={<AdminUsers />} />
           <Route path="/AddProduct" element={<AddProduct />} />
-          <Route path="/EditProduct" element={<EditProduct />} />
+          <Route path="/EditProduct/:productId" element={<EditProduct />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -42,7 +42,7 @@ export async function GetOneProduct(request, response) {
   try {
     const { id } = request.params;
     const product = await prisma.products.findFirst({
-      where: { productName: id },
+      where: { id: id },
     });
 
     if (product) {

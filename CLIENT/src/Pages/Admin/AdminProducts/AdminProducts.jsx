@@ -49,7 +49,6 @@ function AdminProducts() {
   if (error) {
     return <p>{error}</p>;
   }
-  
 
   return (
     <>
@@ -63,7 +62,9 @@ function AdminProducts() {
             <p className="pricenow">Price Ksh {product.productPrice}</p>
 
             <div className="adminoperationButtons">
-              <Link to='/EditProduct'><button className="editbtn">Edit</button></Link>
+              <Link to={`/EditProduct/${product.id}`}>
+                <button className="editbtn">Edit</button>
+              </Link>
               <button
                 className="delbtn"
                 onClick={() => deleteProduct(product.id)}
@@ -73,8 +74,10 @@ function AdminProducts() {
             </div>
           </div>
         ))}
-<Link to ="/AddProduct"><button className="addProductbtn" >+</button></Link>      </section>
-      
+        <Link to="/AddProduct">
+          <button className="addProductbtn">+</button>
+        </Link>
+      </section>
     </>
   );
 }

@@ -25,20 +25,27 @@ where:{userid,productid}
 }
 
 
-export async function getCart(request, response){
 
-const { userid }= request.params;
-try {
-  const cartProduct = await prisma.cart.findMany({
-    where:{ userid },
-    include: { product:true},
-  }) 
-  response.status(200).json({success:true, cartProduct})
-} catch (error) {
-  console.log(error.message);
-  return response.status(404).json({success:false, message:"Cart product not found"})
+
+export async function getCart(req, res) {
+  const { id } = req.params; 
+
+  try {
+  
+    const cartItems = await prisma.cart.findMany({
+      where: { userid: id },
+      include: { product: true }
+    });
+
+    
+    res.status(200).json({ success: true, cartProduct: cartItems });
+  } catch (error) {
+    console.error("Error fetching cart items:", error.message);
+    res.status(500).json({ success: false, message: "An error occurred while fetching the cart" });
+  }
 }
-}
+
+
 
 
 

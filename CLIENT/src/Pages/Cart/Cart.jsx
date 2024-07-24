@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useUserStore from '../../../Store/UserStore';
+import useCounterStore from '../../../Store/CounterStore';
 import './Cart.css';
-
-function Cart({ toggleCartPopup, updateCartCount }) {
+ 
+function Cart({ toggleCartPopup }) {
   const [cartProducts, setCartProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const userr = useUserStore((state) => state.user);
+  const user = useUserStore((state) => state.user);
+  const setCartCount = useCounterStore((state) => state.updateCartCount);
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      if (userr && userr.id) {
-        console.log(userr);
-        console.log('Fetching cart items for user:', userr.id);
+      if (user && user.id) {
+        console.log('Fetching cart items for user:', user.id);
         try {
-          const response = await axios.get(`http://localhost:3000/api/cart/getCart/${userr.id}`, { withCredentials: true });
+          const response = await axios.get(`http://localhost:3000/api/cart/getCart/${user.id}`, { withCredentials: true });
           console.log('Cart Items Response:', response.data.cartProduct);
-          setCartProducts(response.data.cartProduct || []); 
+          setCartProducts(response.data.cartProduct || []);
+          setCartCount(response.data.cartProduct.length);
           setLoading(false);
         } catch (error) {
           console.error('Error fetching cart items:', error.message);
@@ -30,15 +32,15 @@ function Cart({ toggleCartPopup, updateCartCount }) {
     };
 
     fetchCartItems();
-  }, [userr]); 
+  }, [user, setCartCount]);
 
   const handleDeleteFromCart = async (productId) => {
     try {
       console.log('Deleting cart item with ID:', productId);
-      await axios.delete(`http://localhost:3000/api/cart/removeCart//${productId}`, { withCredentials: true });
+      await axios.delete(`http://localhost:3000/api/cart/removeCart/${productId}`, { withCredentials: true });
       const updatedCartProducts = cartProducts.filter(product => product.id !== productId);
       setCartProducts(updatedCartProducts);
-      updateCartCount(updatedCartProducts.length); 
+      setCartCount(updatedCartProducts.length); 
     } catch (error) {
       console.error('Error deleting cart item:', error.message);
       setError('Error deleting cart item');

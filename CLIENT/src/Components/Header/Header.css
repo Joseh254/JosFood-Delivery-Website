@@ -50,6 +50,7 @@
   background-color: #000000;
   color: #ffffff;
   padding: .5rem;
+  text-transform: capitalize;
 }
 .logout{
   background-color: red;

@@ -1,26 +1,20 @@
-import jwt from "jsonwebtoken";
-const VerifyCart = (request, response, next) => {
-  const accessToken = request.cookies.access_token;
-  if (!accessToken) {
-    return response
-      .status(401)
-      .json({ success: false, message: "Unaothorized" });
+import jwt from 'jsonwebtoken';
+
+const VerifyCart = (req, res, next) => {
+  const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: "No token provided" });
   }
-  jwt.verify(accessToken, process.env.JWT_SECRET, (error, decoded) => {
-    if (error) {
-      return response
-        .status(401)
-        .json({ success: false, message: "Unauthorized" });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ success: false, message: "Invalid token" });
     }
-    if (decoded.role !== "user" || "admin") {
-      return response
-        .status(401)
-        .json({
-          success: false,
-          message: "You are not allowed to perform this opertion",
-        });
-    }
+
+    req.user = decoded; 
     next();
   });
 };
+
 export default VerifyCart;

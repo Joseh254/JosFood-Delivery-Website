@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TypingAnimator from "react-typing-animator";
 import axios from "axios";
 import { api_url } from "../../../utills/config";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
 import useCounterStore from "../../../Store/CounterStore";
 import "./Home.css";
@@ -13,16 +13,14 @@ function Home() {
   const [error, setError] = useState(null);
   const [cartProduct, setCartProduct] = useState([]);
   const updateCartCount = useCounterStore((state) => state.updateCartCount);
-  const navigate = Navigate;
   const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     async function fetchCartProducts() {
       if (user) {
         try {
-          const response = await axios.get(`${api_url}/api/cart/getCart/${user.userid}`, { withCredentials: true });
-          console.log(response);
-          setCartProduct(response.data.cartProduct || []); // Ensure response.data is an array
+          const response = await axios.get(`${api_url}/api/cart/getCart/${user.id}`, { withCredentials: true });
+          setCartProduct(response.data.cartProduct || []);
         } catch (error) {
           setError(error.message);
         }
@@ -50,11 +48,9 @@ function Home() {
       return;
     }
 
-    // Log the user object
-    console.log("User object:", user);
-
-    // Ensure cartProduct is an array before using 'some'
-    if (Array.isArray(cartProduct) && cartProduct.some((item) => item.productid === product.id)) {
+    // Check if the product is already in the cart
+    const existingProduct = cartProduct.find((item) => item.productid === product.id);
+    if (existingProduct) {
       alert("This product is already in your cart.");
       return;
     }
@@ -64,16 +60,13 @@ function Home() {
         userid: user.id,
         productid: product.id,
       };
-    
+
       const response = await axios.post(`${api_url}/api/cart/createCart`, newCartProduct, { withCredentials: true });
-      console.log('Add to cart response:', response.data);
       setCartProduct((prevCart) => [...prevCart, response.data.cartProduct]);
       updateCartCount(cartProduct.length + 1);
     } catch (error) {
-      console.log('Error Response:', error.response);
       setError('There was an error adding the product to your cart.');
     }
-    
   }
 
   if (loading) {
@@ -105,7 +98,6 @@ function Home() {
         <div className="heroheading">
           <h1>Order delivery: {animation}</h1>
         </div>
-
         <div className="heroinputs">
           <input type="text" placeholder="Enter delivery address " />
           <select>

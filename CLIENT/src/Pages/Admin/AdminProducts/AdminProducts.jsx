@@ -5,11 +5,13 @@ import axios from "axios";
 import useUserStore from "../../../../Store/UserStore";
 import AdminHeader from "../../../Components/AdminHeader/AdminHeader";
 import { Link } from "react-router-dom";
+import {  useNavigate } from 'react-router-dom';
 
 function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   
   useEffect(() => {
@@ -25,6 +27,7 @@ function AdminProducts() {
         }
       } else {
         setError("404 - Page Not Found");
+        navigate("/Page404");
         setLoading(false);
       }
     }

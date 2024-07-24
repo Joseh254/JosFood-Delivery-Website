@@ -4,39 +4,48 @@ import axios from "axios";
 import useUserStore from '../../../../Store/UserStore';
 import AdminHeader from '../../../Components/AdminHeader/AdminHeader';
 import "./AddProduct.css"; 
+import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage]= useState("")
   const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
-    console.log(user.role);
-    if (user.role === "admin") {
-      try {
-        setLoading(true);
-        setError("");
-        const response = await axios.post(
-          "http://localhost:3000/api/products/createProduct",
-          values,
-          { withCredentials: true }
-        );
-      
-        if (response.data.success === true) {
-          setMessage("Product Added to Database")
-          formik.resetForm();
-        } else {
-          setError("Failed to add product. Please try again.");
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+    console.log(user);
+if (user){
+  if (user.role === "admin") {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await axios.post(
+        "http://localhost:3000/api/products/createProduct",
+        values,
+        { withCredentials: true }
+      );
+    
+      if (response.data.success === true) {
+        setMessage("Product Added to Database")
+        formik.resetForm();
+      } else {
+        setError("Failed to add product. Please try again.");
       }
-    } else {
-      setError("You do not have permission to add a product.");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
+  } else {
+    window.open(window.location.href, '_blank');
+   
+    navigate("/Page404");
+  }
+}
+else{
+navigate("Page404")
+}
   };
 
   const formik = useFormik({

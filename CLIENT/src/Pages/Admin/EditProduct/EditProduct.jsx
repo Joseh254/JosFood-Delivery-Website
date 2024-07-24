@@ -15,6 +15,10 @@ function EditProduct() {
   const [message, setMessage] = useState("");
   const user = useUserStore((state) => state.user);
 
+  useEffect(() => {
+    console.log("User in EditProduct:", user);
+  }, [user]);
+
   const formik = useFormik({
     initialValues: {
       productName: "",
@@ -22,34 +26,35 @@ function EditProduct() {
       productDescription: "",
       productImage: "",
     },
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
   const fetchProduct = async () => {
-if (user.role==='admin'){
-  try {
-    const response = await axios.get(`${api_url}/api/products/getOneproduct/${productId}`, { withCredentials: true });
-    console.log(response.data);
-    if (response.data.success) {
-      formik.setValues(response.data.data);
+    console.log("Fetching product with ID:", productId);
+    if (user?.role === 'admin') {
+      try {
+        const response = await axios.get(`${api_url}/api/products/getOneproduct/${productId}`, { withCredentials: true });
+        console.log("Product data:", response.data);
+        if (response.data.success) {
+          formik.setValues(response.data.data);
+        } else {
+          setError("Failed to fetch product data.");
+        }
+      } catch (error) {
+        setError(error.message);
+      }
     } else {
-      setError("Failed to fetch product data.");
+      setError("Unauthorized");
+      navigate("/Page404");
     }
-  } catch (error) {
-    setError(error.message);
-  }
-}else{
-setError("unouthorized")
-navigate("Page404")
-}
   };
 
   useEffect(() => {
     fetchProduct();
-  }, [productId]);
+  }, [productId, user]); // Add user to the dependency array
 
   async function handleSubmit(values) {
-    if (user.role === "admin") {
+    if (user?.role === "admin") {
       try {
         setLoading(true);
         setError("");

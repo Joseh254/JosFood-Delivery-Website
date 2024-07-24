@@ -22,23 +22,33 @@ function Header() {
     if (user) {
       setSignedIn(true);
       setIsAdmin(user.role === "admin");
+      
+      // Fetch cart count for the logged-in user
+      const fetchCartCount = async () => {
+
+        if (!user || !user.id) {
+          console.error('User ID is not defined');
+          setError('User ID is not defined');
+          return;
+        }
+        try {
+          const response = await fetch(`http://localhost:3000/api/cart/getCart/${user.id}`, { 
+            credentials: 'include' 
+          });
+          const data = await response.json();
+          setCartCount(data.cartProduct.length);
+        } catch (error) {
+          console.error('Error fetching cart count:', error.message);
+        }
+      };
+
+      fetchCartCount();
     } else {
       setSignedIn(false);
       setIsAdmin(false);
+      setCartCount(0); 
     }
-  }, [user]);
-
-  useEffect(() => {
-    // Fetch cart count from local storage
-    const fetchCartCountFromLocalStorage = () => {
-      const count = localStorage.getItem('cartCount');
-      if (count) {
-        setCartCount(Number(count));
-      }
-    };
-
-    fetchCartCountFromLocalStorage();
-  }, [setCartCount]);
+  }, [user, setCartCount]);
 
   const handleSignInToggle = () => {
     navigate("/Signup");
@@ -52,6 +62,7 @@ function Header() {
     changeUserInformation(null);
     setSignedIn(false);
     setIsAdmin(false);
+    setCartCount(0); 
     navigate("/Login");
   };
 
@@ -73,12 +84,12 @@ function Header() {
       <div className="loginandsignupbuttons">
         {signedIn && !isLoginPage ? (
           <>
-            {isAdmin && signedIn && (
+            {signedIn && (
               <button
                 className="adminbutton"
                 onClick={() => navigate("/AdminHome")}
               >
-                Welcome back {user.firstName}
+                Welcome  {user.firstName}
               </button>
             )}
 
@@ -91,7 +102,8 @@ function Header() {
           </>
         ) : (
           <>
-            <button id="login" className="loginlogout" onClick={handleLoginToggle}>
+            <button id="login" className="loginlogout" onClick
+={handleLoginToggle}>
               Login
             </button>
             <button id="signup" onClick={handleSignInToggle}>

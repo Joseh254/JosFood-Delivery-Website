@@ -49,7 +49,7 @@ export async function loginUser(request, response) {
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: "100h",
+          expiresIn: "200h",
         });
 
         response

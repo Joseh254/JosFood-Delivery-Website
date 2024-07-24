@@ -35,10 +35,10 @@ function AdminUsers() {
 
   const toggleAdminStatus = async (userId, isAdmin) => {
     try {
-      const response = await axios.patch(`http://localhost:3000/api/users/users/${userId}/toggle-admin`, {
+      const response = await axios.patch(`http://localhost:3000/api/users/toggleAdmin/${userId}`, {
         isAdmin: !isAdmin,
       }, { withCredentials: true });
-
+console.log(response);
       if (response.status === 200) {
         setSucccess("added to database")
         setUsers((prevUsers) =>
